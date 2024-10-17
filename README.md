@@ -32,3 +32,6 @@ with open("breast_cancer.csv", 'wb') as f:
 
     f.write(uploaded[list(uploaded.keys())[0]])
 ```
+輸入!ls 指令，查看機器上是否有該檔案。你將會看到datalab 資料夾和breast_cancer_data.csv 檔案。
+
+![image]
