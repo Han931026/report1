@@ -17,4 +17,18 @@
 
 Google有一台linux 虛擬機，這樣就可以存取終端為專案安裝特定套件。如果在程式碼單元中輸入(!ls )指令，那麼你的虛擬機器中會出現一個simple_data 資料夾。
 
-![image](
+![image](https://github.com/Han931026/report1/blob/main/!ls(%E6%88%AA%E5%9C%96).png)
+
+首先將資料集放置到該機器上，這樣我們的notebook 就可以存取它。你可以使用以下程式碼：
+
+```
+#Uploading the Dataset
+
+from google.colab import files
+
+uploaded = files.upload()
+
+with open("breast_cancer.csv", 'wb') as f:
+
+    f.write(uploaded[list(uploaded.keys())[0]])
+```
