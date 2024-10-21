@@ -35,3 +35,27 @@ with open("breast_cancer.csv", 'wb') as f:
 輸入!ls 指令，查看機器上是否有該檔案。你將會看到datalab 資料夾和breast_cancer_data.csv 檔案。
 
 ![image](https://github.com/Han931026/report1/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202024-10-21%20092315.png)
+
+資料預處理:
+
+現在數據已經在機器上了,我們使用pandas將其輸入到檔案中。
+
+```
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+
+#Importing dataset
+dataset = pd.read_csv('breast_cancer.csv')
+
+
+
+#Check the first 5 rows of the dataset. 
+
+    dataset.head(5)
+
+```
+
+![image](
