@@ -102,7 +102,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 ```
 參數test_size = 0.2 定義測試集比例。這裡，我們將訓練集設定為資料集的80%，測試集佔資料集的20%。
 
-#Keras:
+# Keras:
 
 Keras 是一種建構人工神經網路的高階API。它使用TensorFlow 或Theano 後端執行內部運作。要安裝Keras，必須先安裝TensorFlow。CoLaboratory 已經在虛擬機器上安裝了TensorFlow。使用以下指令可以檢查是否安裝TensorFlow：
 
@@ -140,6 +140,96 @@ classifier = Sequential()
 
 ```
 
-#設計網路
+# 設計網路:
 
 對於每個隱藏層，我們需要定義三個基本參數：units、kernel_initializer 和activation。 units 參數定義每層包含的神經元數量。 Kernel_initializer 定義神經元在輸入資料上執行時的初始權重（詳見https://faroit.github.io/keras-docs/1.2.2/initializations/）。 activation 定義資料的激活函數。
+
+第一個隱藏層：
+
+16 個具備統一初始權重的神經元，活化函數為ReLU。此外，定義參數input_dim = 30 作為輸入層的規格。注意我們的資料集中有30 個特徵列。註：如何決定第一個隱藏層的節點數，對於初學者來說，一個簡單方式是：x 和y 的總和除以2。如(30+1)/2 = 15.5 ~ 16，因此，units = 16.
+
+第二層：第二層和第一層一樣，不過第二層沒有input_dim 參數.
+
+輸出層:由於我們的輸出是0 或1，因此我們可以使用具備統一初始權重的單一單元。但是，這裡我們使用sigmoid 來活化函數。
+
+```
+
+# Adding the input layer and the first hidden layer
+
+classifier.add(Dense(units = 16, kernel_initializer = 'uniform', activation = 'relu', input_dim = 30))
+
+
+
+# Adding the second hidden layer
+
+classifier.add(Dense(units = 16, kernel_initializer = 'uniform', activation = 'relu'))
+
+
+
+# Adding the output layer
+
+classifier.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
+
+
+
+# Compiling the ANN
+
+classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+```
+
+擬合：
+
+運行人工神經網絡，發生反向傳播。你將在CoLaboratory 上看到所有處理過程，而不是在自己的電腦上。
+
+```
+
+# Fitting the ANN to the Training set
+
+classifier.fit(X_train, y_train, batch_size = 10, epochs = 100)
+
+```
+
+這裡batch_size 是你希望同時處理的輸入量。epoch 指數據通過神經網路一次的整個週期。它們在Colaboratory Notebook 中顯示如下：
+
+![image](
+
+進行預測，建構混淆矩陣。
+
+```
+
+# Predicting the Test set results
+
+y_pred = classifier.predict(X_test)
+
+y_pred = (y_pred > 0.5)
+
+
+
+# Making the Confusion Matrix
+
+from sklearn.metrics import confusion_matrix
+
+cm = confusion_matrix(y_test, y_pred)
+
+```
+
+訓練網路後，就可以在X_test set 上進行預測，以檢查模型在新資料上的效能。在程式碼單元中輸入和執行cm 查看結果。
+
+# 混淆矩陣
+
+混淆矩陣是模型做出的正確、錯誤預測的矩陣表徵。此矩陣可供個人調查哪些預測和另一種預測混淆。這是一個2×2 的混淆矩陣。
+
+![image](
+
+混淆矩陣如下所示[cm (Ctrl+Enter)]
+
+![image](
+
+上圖表示：68 個真負類、0 個假正類、4 個假負類、42 個真正類。很簡單。此平方矩陣的大小隨著分類類別的增加而增加。
+
+這個範例中的準確率幾乎達到100%，只有4 個錯誤預測。但並不總是這樣。有時你可能需要投入更多時間，研究模型的行為，提出更好、更複雜的解決方案。如果一個網路效能不夠好，你需要調整超參數來改進模型。
+
+希望此文可以幫助你開始使用Colaboratory。教學Notebook 位址：https://colab.research.google.com/drive/1aQGl_sH4TVehK8PDBRspwI4pD16xIR0r
+
+原文連結：https://medium.com/@howal/neural-networks-with-google-colaboratory-artificial-intelligence-getting-started-713b5eb07f14
