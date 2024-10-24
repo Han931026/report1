@@ -221,7 +221,8 @@ cm = confusion_matrix(y_test, y_pred)
 
 混淆矩陣是模型做出的正確、錯誤預測的矩陣表徵。此矩陣可供個人調查哪些預測和另一種預測混淆。這是一個2×2 的混淆矩陣。
 
-![image](
+![image](https://github.com/Han931026/report1/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202024-10-24%20131211.png)
+
 
 混淆矩陣如下所示[cm (Ctrl+Enter)]
 
